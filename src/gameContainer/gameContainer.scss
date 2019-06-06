@@ -1,0 +1,15 @@
+@import "vars.scss";
+
+.game-container {
+  .back {
+    font-size: 2em;
+    margin-bottom: 30px;
+    display: inline-block;
+    cursor: pointer;
+    color: $black;
+
+    &:hover {
+      color: $red;
+    }
+  }
+}

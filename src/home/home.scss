@@ -1,0 +1,36 @@
+@import "vars.scss";
+
+.home {
+  .home-content {
+    display: flex;
+
+    > div:first-child {
+      width: 60%;
+
+      p {
+        width: 80%;
+      }
+    }
+
+    > div:last-child {
+      width: 40%;
+    }
+
+    a {
+      background-color: $red;
+      color: $yellow;
+      font-family: $primary-font;
+      font-size: 2.5em;
+      padding: 20px 30px;
+      display: inline-block;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      text-align: center;
+      width: 80%;
+
+      &:hover {
+        background-color: $darkred;
+      }
+    }
+  }
+}

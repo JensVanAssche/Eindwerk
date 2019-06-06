@@ -1,6 +1,8 @@
 import Phaser from "phaser";
-import Countdown from "./scenes/countdown";
-import Game from "./scenes/game";
+import Start from "./start";
+import Countdown from "./countdown";
+import Main from "./main";
+import End from "./end";
 
 import React from "react";
 
@@ -20,7 +22,7 @@ export default class IGame extends React.Component {
         }
       },
       parent: "phaser-game",
-      scene: [Countdown],
+      scene: [Start, Countdown, Main, End],
       rectangle: Phaser.Rectangle
     };
 

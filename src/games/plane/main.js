@@ -1,25 +1,34 @@
 import { Scene } from "phaser";
-import { GAME_HEIGHT, GAME_WIDTH } from "../config";
+import { GAME_HEIGHT, GAME_WIDTH } from "./config";
 
 var plane;
 var background;
 var star;
 
-var threshold = 20;
+var threshold = 40;
 var score = 0;
 var scoreText;
 var volumeText;
 var volume;
 
-export default class Game extends Scene {
+export default class Main extends Scene {
+  constructor() {
+    super("main");
+  }
+
   preload() {
-    this.load.image("sky", "assets/sky_loop.png");
-    this.load.image("plane", "assets/plane.png");
-    this.load.image("star", "assets/star.png");
-    this.load.bitmapFont("custom", "assets/font.png", "assets/font.fnt");
+    this.load.image("sky", "../../assets/sky_loop.png");
+    this.load.image("plane", "../../assets/plane.png");
+    this.load.image("star", "../../assets/star.png");
+    this.load.bitmapFont(
+      "custom",
+      "../../assets/font.png",
+      "../../assets/font.fnt"
+    );
   }
 
   create() {
+    // create sky
     background = this.add.tileSprite(
       GAME_WIDTH / 2,
       GAME_HEIGHT / 2,
@@ -28,23 +37,40 @@ export default class Game extends Scene {
       "sky"
     );
 
+    // create plane
     plane = this.physics.add
       .image(200, GAME_HEIGHT / 2, "plane")
       .setScale(0.1)
-      .setOrigin(0.5, 0);
+      .setOrigin(0.5, 0)
+      .setSize(1000, 450)
+      .setOffset(200, 250);
     plane.setCollideWorldBounds(true);
 
+    // spawn the first star
     this.spawnStar();
 
+    // create the score counter & volume debug
     volumeText = this.add.text(0, 0, "0");
     scoreText = this.add.bitmapText(GAME_WIDTH - 120, 20, "custom", score, 80);
 
-    var threshold = 0;
-    var absolute = 0;
+    // create timer for end of game, set to 60 seconds
+    this.time.addEvent({
+      delay: 60000,
+      callback: this.endGame,
+      callbackScope: this,
+      loop: false
+    });
+
+    // microphone API, updates the volume variable
+    var micThreshold = 205;
 
     navigator.mediaDevices
       .getUserMedia({
-        audio: true,
+        audio: {
+          echoCancellation: false,
+          noiseSuppression: false,
+          autoGainControl: false
+        },
         video: false
       })
       .then(function(stream) {
@@ -62,19 +88,18 @@ export default class Game extends Scene {
         javascriptNode.onaudioprocess = function() {
           var array = new Uint8Array(analyser.frequencyBinCount);
           analyser.getByteFrequencyData(array);
-          var values = 0;
+          var absolute = 0;
 
-          var length = array.length;
-          for (var i = 0; i < length; i++) {
-            values += array[i];
+          for (let i = 0; i < array.length; i++) {
+            if (array[i] > absolute) {
+              absolute = array[i];
+            }
           }
 
-          absolute = values / length;
-
-          if (absolute - threshold < 0) {
+          if (absolute - micThreshold < 0) {
             volume = 0;
           } else {
-            volume = absolute - threshold;
+            volume = absolute - micThreshold;
           }
         };
       })
@@ -84,24 +109,31 @@ export default class Game extends Scene {
   }
 
   update() {
+    // update the debug volume counter
     volumeText.text = Math.round(volume);
+
+    // move background & star
     background.tilePositionX += 2;
     star.x -= 3;
 
+    // detect plane & star collision
     this.physics.collide(plane, star, this.hitSprite, null, this);
 
+    // detect when the volume is above a threshold to make the plane ascend or descend
     if (volume > threshold) {
       plane.body.y -= 4;
     } else {
       plane.body.y += 2;
     }
 
+    // if a star reaches the end of the screen, destroy it and spawn a new one
     if (star.x <= -70) {
       star.destroy();
       this.spawnStar();
     }
   }
 
+  // handling a collision between plane and star
   hitSprite(plane, star) {
     star.destroy();
     score++;
@@ -109,10 +141,16 @@ export default class Game extends Scene {
     this.spawnStar();
   }
 
+  // handling star spawning
   spawnStar() {
     star = this.physics.add
       .image(GAME_WIDTH, Math.random() * GAME_HEIGHT, "star")
       .setScale(0.08)
       .setOrigin(0, 0.5);
+  }
+
+  // quit the game
+  endGame() {
+    this.scene.start("end");
   }
 }
