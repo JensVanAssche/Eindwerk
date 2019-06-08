@@ -1,9 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { selectIsLoggedIn } from "auth/selectors";
 
 import "./navigation.scss";
 
-function Navigation() {
+function Navigation({ isLoggedIn }) {
   return (
     <div className="nav">
       <div className="nav-content">
@@ -13,8 +15,17 @@ function Navigation() {
         <div className="grow" />
         <div>
           <Link to="/about">Over Ons</Link>
-          <Link to="/login-parent">Log In</Link>
-          <Link to="/signup">Registreer</Link>
+          {!isLoggedIn && (
+            <div class="nav-auth">
+              <Link to="/login-parent">Log In</Link>
+              <Link to="/signup">Registreer</Link>
+            </div>
+          )}
+          {isLoggedIn && (
+            <div class="nav-auth">
+              <Link to="/dashboard">Dashboard</Link>
+            </div>
+          )}
         </div>
       </div>
       <div className="nav-skew-light" />
@@ -23,4 +34,11 @@ function Navigation() {
   );
 }
 
-export default Navigation;
+const mapStateToProps = state => ({
+  isLoggedIn: selectIsLoggedIn(state)
+});
+
+export default connect(
+  mapStateToProps,
+  null
+)(Navigation);
