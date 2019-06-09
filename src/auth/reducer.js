@@ -1,39 +1,54 @@
 import {
-  LOGIN_PENDING,
-  LOGIN_FULFILLED,
-  LOGIN_REJECTED,
+  LOGIN_PARENT_PENDING,
+  LOGIN_PARENT_FULFILLED,
+  LOGIN_PARENT_REJECTED,
+  LOGIN_CHILD_PENDING,
+  LOGIN_CHILD_FULFILLED,
+  LOGIN_CHILD_REJECTED,
   LOGOUT_PENDING,
   LOGOUT_FULFILLED,
-  LOGOUT_REJECTED,
   ME_PENDING,
   ME_FULFILLED,
   ME_REJECTED
 } from "./actions";
 
 const initialState = {
-  isLoggedIn: false,
+  parentLoggedIn: false,
+  childLoggedIn: false,
+  user: null,
   loading: false
 };
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
-    case LOGIN_PENDING:
+    case LOGIN_PARENT_PENDING:
       return {
         ...state,
         loading: true
       };
-    case LOGIN_FULFILLED:
+    case LOGIN_PARENT_FULFILLED:
       return {
         ...state,
         loading: false,
-        isLoggedIn: true
+        parentLoggedIn: true,
+        user: action.payload.payload
       };
-    case LOGIN_REJECTED:
+    case LOGIN_PARENT_REJECTED:
+      return initialState;
+    case LOGIN_CHILD_PENDING:
+      return {
+        ...state,
+        loading: true
+      };
+    case LOGIN_CHILD_FULFILLED:
       return {
         ...state,
         loading: false,
-        isLoggedIn: false
+        childLoggedIn: true,
+        user: action.payload.payload
       };
+    case LOGIN_CHILD_REJECTED:
+      return initialState;
     case LOGOUT_PENDING:
       return {
         ...state,
@@ -42,12 +57,9 @@ export default function reducer(state = initialState, action) {
     case LOGOUT_FULFILLED:
       return {
         ...state,
-        loading: false,
-        isLoggedIn: false
-      };
-    case LOGOUT_REJECTED:
-      return {
-        ...state,
+        parentLoggedIn: false,
+        childLoggedIn: false,
+        user: null,
         loading: false
       };
     case ME_PENDING:
@@ -56,10 +68,19 @@ export default function reducer(state = initialState, action) {
         loading: true
       };
     case ME_FULFILLED:
+      if (action.payload.payload.type === "parent") {
+        return {
+          ...state,
+          loading: false,
+          parentLoggedIn: true,
+          user: action.payload.payload
+        };
+      }
       return {
         ...state,
         loading: false,
-        isLoggedIn: true
+        childLoggedIn: true,
+        user: action.payload.payload
       };
     case ME_REJECTED:
       return initialState;

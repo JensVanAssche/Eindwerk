@@ -1,11 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { selectIsLoggedIn } from "auth/selectors";
+import {
+  selectParentLoggedIn,
+  selectChildLoggedIn,
+  selectUser
+} from "auth/selectors";
 
 import "./navigation.scss";
 
-function Navigation({ isLoggedIn }) {
+function Navigation({ parentLoggedIn, childLoggedIn, user }) {
   return (
     <div className="nav">
       <div className="nav-content">
@@ -15,15 +19,22 @@ function Navigation({ isLoggedIn }) {
         <div className="grow" />
         <div>
           <Link to="/about">Over Ons</Link>
-          {!isLoggedIn && (
-            <div class="nav-auth">
+          {!parentLoggedIn && !childLoggedIn ? (
+            <div className="nav-auth">
               <Link to="/login-parent">Log In</Link>
               <Link to="/signup">Registreer</Link>
             </div>
+          ) : (
+            <div className="nav-auth" />
           )}
-          {isLoggedIn && (
-            <div class="nav-auth">
-              <Link to="/dashboard">Dashboard</Link>
+          {parentLoggedIn && (
+            <div className="nav-auth">
+              <Link to="/dashboard-parent">{user.firstName}</Link>
+            </div>
+          )}
+          {childLoggedIn && (
+            <div className="nav-auth">
+              <Link to="/dashboard-child">{user.firstName}</Link>
             </div>
           )}
         </div>
@@ -35,7 +46,9 @@ function Navigation({ isLoggedIn }) {
 }
 
 const mapStateToProps = state => ({
-  isLoggedIn: selectIsLoggedIn(state)
+  parentLoggedIn: selectParentLoggedIn(state),
+  childLoggedIn: selectChildLoggedIn(state),
+  user: selectUser(state)
 });
 
 export default connect(

@@ -2,11 +2,16 @@ import React from "react";
 import { Route } from "react-router-dom";
 import { connect } from "react-redux";
 
-import { login, me } from "auth/actions";
-import { selectIsLoggedIn, selectLoading } from "auth/selectors";
+import { me } from "auth/actions";
+import {
+  selectParentLoggedIn,
+  selectChildLoggedIn,
+  selectLoading
+} from "auth/selectors";
 
 import NotAuthRoute from "routing/NotAuthRoute";
-import AuthRoute from "routing/AuthRoute";
+import ParentAuthRoute from "routing/ParentAuthRoute";
+import ChildAuthRoute from "routing/ChildAuthRoute";
 
 import Navigation from "../navigation/Navigation";
 import Home from "../home/Home";
@@ -16,7 +21,9 @@ import About from "../about/About";
 import LoginParent from "../auth/LoginParent";
 import LoginChild from "../auth/LoginChild";
 import Signup from "../auth/Signup";
-import Dashboard from "../dashboard/Dashboard";
+import DashboardParent from "../dashboard/DashboardParent";
+import DashboardChild from "../dashboard/DashboardChild";
+import AddChild from "../addChild/AddChild";
 
 import "./app.scss";
 
@@ -26,7 +33,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { isLoggedIn, loading } = this.props;
+    const { parentLoggedIn, childLoggedIn, loading } = this.props;
 
     if (loading) return <div>loading</div>;
 
@@ -41,22 +48,40 @@ class App extends React.Component {
           <NotAuthRoute
             path={"/login-parent"}
             component={LoginParent}
-            isLoggedIn={isLoggedIn}
+            parentLoggedIn={parentLoggedIn}
+            childLoggedIn={childLoggedIn}
           />
           <NotAuthRoute
             path={"/login-child"}
             component={LoginChild}
-            isLoggedIn={isLoggedIn}
+            parentLoggedIn={parentLoggedIn}
+            childLoggedIn={childLoggedIn}
           />
           <NotAuthRoute
             path={"/signup"}
             component={Signup}
-            isLoggedIn={isLoggedIn}
+            parentLoggedIn={parentLoggedIn}
+            childLoggedIn={childLoggedIn}
           />
-          <AuthRoute
-            path={"/dashboard"}
-            component={Dashboard}
-            isLoggedIn={isLoggedIn}
+          <ParentAuthRoute
+            exact
+            path={"/dashboard-parent"}
+            component={DashboardParent}
+            parentLoggedIn={parentLoggedIn}
+            childLoggedIn={childLoggedIn}
+          />
+          <ParentAuthRoute
+            path={"/dashboard-parent/addchild"}
+            component={AddChild}
+            parentLoggedIn={parentLoggedIn}
+            childLoggedIn={childLoggedIn}
+          />
+          <ChildAuthRoute
+            exact
+            path={"/dashboard-child"}
+            component={DashboardChild}
+            parentLoggedIn={parentLoggedIn}
+            childLoggedIn={childLoggedIn}
           />
         </div>
       </div>
@@ -65,13 +90,13 @@ class App extends React.Component {
 }
 
 const mapDispatchToProps = {
-  me,
-  login
+  me
 };
 
 const mapStateToProps = state => ({
   loading: selectLoading(state),
-  isLoggedIn: selectIsLoggedIn(state)
+  parentLoggedIn: selectParentLoggedIn(state),
+  childLoggedIn: selectChildLoggedIn(state)
 });
 
 export default connect(

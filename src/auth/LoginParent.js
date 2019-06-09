@@ -1,13 +1,14 @@
 import React from "react";
 import { connect } from "react-redux";
 import { validateEmail, validateRequired } from "utils/validate";
-import { login } from "./actions";
+import { loginParent } from "./actions";
 import "./auth.scss";
 
 class LoginParent extends React.Component {
   state = {
     email: "",
-    password: ""
+    password: "",
+    error: null
   };
 
   handleEmailChange = event => this.setState({ email: event.target.value });
@@ -25,19 +26,23 @@ class LoginParent extends React.Component {
     event.preventDefault();
 
     const { email, password } = this.state;
-    const { login } = this.props;
+    const { loginParent } = this.props;
 
     const isValid = this.validateForm(email, password);
 
     if (isValid) {
-      login(email, password).then(res => console.log(res));
+      loginParent(email, password);
+    } else {
+      this.setState({ error: "Velden zijn niet juist ingevuld" });
     }
   };
 
   render() {
+    const { error } = this.state;
     return (
       <div>
         <h1>Log In als ouder/leerkracht</h1>
+        {error && <p className="error-message">{error}</p>}
         <form onSubmit={this.handleSubmit}>
           <input
             type="text"
@@ -61,7 +66,7 @@ class LoginParent extends React.Component {
 }
 
 const mapDispatchToProps = {
-  login
+  loginParent
 };
 
 export default connect(

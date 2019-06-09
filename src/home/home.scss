@@ -15,22 +15,22 @@
     > div:last-child {
       width: 40%;
     }
+  }
 
-    a {
-      background-color: $red;
-      color: $yellow;
-      font-family: $primary-font;
-      font-size: 2.5em;
-      padding: 20px 30px;
-      display: inline-block;
-      border-radius: 10px;
-      margin-bottom: 20px;
-      text-align: center;
-      width: 80%;
+  a {
+    background-color: $red;
+    color: $yellow;
+    font-family: $primary-font;
+    font-size: 2.5em;
+    padding: 20px 30px;
+    display: inline-block;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+    width: 300px;
 
-      &:hover {
-        background-color: $darkred;
-      }
+    &:hover {
+      background-color: $darkred;
     }
   }
 }

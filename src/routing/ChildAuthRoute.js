@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
 
-function NotAuthRoute({
+function AuthRoute({
   component: Component,
   parentLoggedIn,
   childLoggedIn,
@@ -11,18 +11,18 @@ function NotAuthRoute({
     <Route
       {...rest}
       render={props =>
-        parentLoggedIn || childLoggedIn ? (
+        !parentLoggedIn && childLoggedIn ? (
+          <Component {...props} />
+        ) : (
           <Redirect
             to={{
               pathname: "/"
             }}
           />
-        ) : (
-          <Component {...props} />
         )
       }
     />
   );
 }
 
-export default NotAuthRoute;
+export default AuthRoute;

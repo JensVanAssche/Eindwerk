@@ -1,15 +1,16 @@
 import React from "react";
 import { connect } from "react-redux";
-
 import { logout } from "auth/actions";
 
-function Dashboard({ logout }) {
+import "./dashboard.scss";
+
+function DashboardChild({ logout }) {
   return (
     <div>
       <h1>Dashboard</h1>
-      <a href="#" onClick={logout}>
-        logout
-      </a>
+      <span onClick={logout} className="button">
+        Uitloggen
+      </span>
     </div>
   );
 }
@@ -21,4 +22,4 @@ const mapDispatchToProps = {
 export default connect(
   null,
   mapDispatchToProps
-)(Dashboard);
+)(DashboardChild);
