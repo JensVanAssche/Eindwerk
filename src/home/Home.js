@@ -15,11 +15,11 @@ function Home({ parentLoggedIn, childLoggedIn, user, logout }) {
     <div className="home">
       {!parentLoggedIn && !childLoggedIn ? (
         <div>
-          <h1>WELKOM BIJ SPEECHI</h1>
+          <h1>WELKOM BIJ DIXIDO</h1>
           <div className="home-content">
             <div>
               <p>
-                Speechi is jouw platform om op een leuke manier stemgeven te
+                Dixido is jouw platform om op een leuke manier stemgeven te
                 oefenen.
                 <br />
                 Als ouder of leerkacht kan je je bovenaan registreren en
@@ -45,7 +45,9 @@ function Home({ parentLoggedIn, childLoggedIn, user, logout }) {
             <div />
             <div>
               <Link to="/dashboard-parent">Ga naar dashboard</Link>
-              <Link onClick={logout}>Uitloggen</Link>
+              <span className="big-red-button" onClick={logout}>
+                Uitloggen
+              </span>
             </div>
           </div>
         </div>
@@ -57,7 +59,9 @@ function Home({ parentLoggedIn, childLoggedIn, user, logout }) {
             <div />
             <div>
               <Link to="/games">Ga naar jouw spelletjes</Link>
-              <Link onClick={logout}>Uitloggen</Link>
+              <span className="big-red-button" onClick={logout}>
+                Uitloggen
+              </span>
             </div>
           </div>
         </div>

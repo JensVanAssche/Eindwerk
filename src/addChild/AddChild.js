@@ -63,7 +63,6 @@ class AddChild extends React.Component {
     const { error } = this.state;
     return (
       <div>
-        <Link to="/dashboard-parent">Ga terug</Link>
         <h1>Voeg kind toe</h1>
         {error && <p className="error-message">{error}</p>}
         <form onSubmit={this.handleSubmit}>
@@ -95,7 +94,10 @@ class AddChild extends React.Component {
             value={this.state.passwordConfirm}
             onChange={this.handlePasswordConfirmChange}
           />
-          <button type="submit">Registreer</button>
+          <button type="submit">Voeg toe</button>
+          <Link to="/dashboard-parent" className="red-button">
+            Ga terug
+          </Link>
         </form>
       </div>
     );

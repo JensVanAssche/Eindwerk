@@ -14,7 +14,7 @@ function Navigation({ parentLoggedIn, childLoggedIn, user }) {
     <div className="nav">
       <div className="nav-content">
         <Link to="/" className="logo">
-          Speechi
+          dixido
         </Link>
         <div className="grow" />
         <div>

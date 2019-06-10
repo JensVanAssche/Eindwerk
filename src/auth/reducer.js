@@ -19,7 +19,7 @@ const initialState = {
   loading: false
 };
 
-export default function reducer(state = initialState, action) {
+export default function authReducer(state = initialState, action) {
   switch (action.type) {
     case LOGIN_PARENT_PENDING:
       return {
@@ -31,7 +31,7 @@ export default function reducer(state = initialState, action) {
         ...state,
         loading: false,
         parentLoggedIn: true,
-        user: action.payload.payload
+        user: action.payload
       };
     case LOGIN_PARENT_REJECTED:
       return initialState;
@@ -45,7 +45,7 @@ export default function reducer(state = initialState, action) {
         ...state,
         loading: false,
         childLoggedIn: true,
-        user: action.payload.payload
+        user: action.payload
       };
     case LOGIN_CHILD_REJECTED:
       return initialState;
@@ -68,19 +68,19 @@ export default function reducer(state = initialState, action) {
         loading: true
       };
     case ME_FULFILLED:
-      if (action.payload.payload.type === "parent") {
+      if (action.payload.type === "parent") {
         return {
           ...state,
           loading: false,
           parentLoggedIn: true,
-          user: action.payload.payload
+          user: action.payload
         };
       }
       return {
         ...state,
         loading: false,
         childLoggedIn: true,
-        user: action.payload.payload
+        user: action.payload
       };
     case ME_REJECTED:
       return initialState;

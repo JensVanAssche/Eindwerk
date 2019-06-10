@@ -1,62 +1,82 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import api from "./api";
 import { selectUser } from "auth/selectors";
 import { logout } from "auth/actions";
+import { getChildren } from "./actions";
+import { selectChildren } from "./selectors";
 
-import "./dashboard.scss";
+import ChildEntry from "./childEntry/ChildEntry";
+import ChildConfModal from "./childConfModal/ChildConfModal";
+import ChildStatsModal from "./childStatsModal/ChildStatsModal";
 
 class Dashboard extends React.Component {
-  state = {
-    children: null,
-    loading: true
-  };
-
-  async componentDidMount() {
-    const { user } = this.props;
-    const children = await api.getAll(user.id);
-    this.setState({ children: children.payload, loading: false });
+  constructor(props) {
+    super(props);
+    this.confModalRef = React.createRef();
+    this.statsModalRef = React.createRef();
+    this.state = {
+      children: null
+    };
   }
 
+  componentDidMount() {
+    const { user, getChildren } = this.props;
+    getChildren(user.id);
+  }
+
+  openConfModal = child => this.confModalRef.current.openModal(child);
+
+  openStatsModal = child => this.statsModalRef.current.openModal(child);
+
   render() {
-    const { logout } = this.props;
-    if (this.state.loading) {
+    const { logout, children } = this.props;
+    if (!children) {
       return <span>loading</span>;
     }
 
     return (
-      <div>
+      <div className="dashboard">
         <h1>Dashboard</h1>
-        <Link to="/dashboard-parent/addchild" className="button">
+        <Link to="/dashboard-parent/addchild" className="red-button">
           Voeg kind toe
         </Link>
-        <span onClick={logout} className="button">
+        <span onClick={logout} className="red-button">
           Uitloggen
         </span>
-        {this.state.children.map(child => {
+        {children.map(child => {
           return (
-            <div className="child-entry" key={child.id}>
-              <span>
-                {child.firstName} {child.lastName}
-              </span>
-              <span className="grow" />
-              <span>Configureer</span>
-              <span>Stats</span>
-            </div>
+            <ChildEntry
+              child={child}
+              key={child.id}
+              openConfModal={this.openConfModal}
+              openStatsModal={this.openStatsModal}
+            />
           );
         })}
+        {children.length === 0 && (
+          <div>
+            <p>
+              Nog geen kinderen op dit account. Maak een account voor je kind
+              aan!
+            </p>
+          </div>
+        )}
+        <ChildConfModal ref={this.confModalRef} />
+        <ChildStatsModal ref={this.statsModalRef} />
       </div>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  user: selectUser(state)
+  user: selectUser(state),
+  children: selectChildren(state)
 });
 
 const mapDispatchToProps = {
-  logout
+  logout,
+  getChildren
 };
 
 export default connect(
