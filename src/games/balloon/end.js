@@ -2,10 +2,15 @@ import { Scene } from "phaser";
 import { GAME_HEIGHT, GAME_WIDTH } from "./config";
 
 var text;
+var score;
 
 export default class End extends Scene {
   constructor() {
     super("end");
+  }
+
+  init(data) {
+    score = data.score;
   }
 
   preload() {
@@ -49,7 +54,13 @@ export default class End extends Scene {
       .setOrigin(0.5, 0.5);
 
     this.add
-      .bitmapText(GAME_WIDTH / 2, GAME_HEIGHT / 2, "playFont", "je score:", 64)
+      .bitmapText(
+        GAME_WIDTH / 2,
+        GAME_HEIGHT / 2,
+        "playFont",
+        "je score: " + score,
+        64
+      )
       .setOrigin(0.5, 0.5);
 
     // make button interactive

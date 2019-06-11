@@ -5,11 +5,12 @@ var plane;
 var background;
 var star;
 
-var threshold = 40;
-var score = 0;
+var threshold = 50;
+var score;
 var scoreText;
 var volumeText;
 var volume;
+var time = 60000;
 
 export default class Main extends Scene {
   constructor() {
@@ -28,6 +29,8 @@ export default class Main extends Scene {
   }
 
   create() {
+    score = 0;
+
     // create sky
     background = this.add.tileSprite(
       GAME_WIDTH / 2,
@@ -55,14 +58,14 @@ export default class Main extends Scene {
 
     // create timer for end of game, set to 60 seconds
     this.time.addEvent({
-      delay: 60000,
+      delay: time,
       callback: this.endGame,
       callbackScope: this,
       loop: false
     });
 
     // microphone API, updates the volume variable
-    var micThreshold = 205;
+    var micThreshold = 155;
 
     navigator.mediaDevices
       .getUserMedia({
@@ -151,6 +154,6 @@ export default class Main extends Scene {
 
   // quit the game
   endGame() {
-    this.scene.start("end");
+    this.scene.start("end", { score: score });
   }
 }

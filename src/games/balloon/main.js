@@ -2,13 +2,14 @@ import { Scene } from "phaser";
 import { GAME_HEIGHT, GAME_WIDTH } from "./config";
 
 var balloon;
-var threshold = 40;
-var score = 0;
+var threshold = 50;
+var score;
 var balloonSize = 1;
-var maxBalloonSize = 3;
+var maxBalloonSize = 2.5;
 var scoreText;
 var volumeText;
 var volume;
+var time = 60000;
 
 export default class Main extends Scene {
   constructor() {
@@ -32,6 +33,8 @@ export default class Main extends Scene {
   }
 
   create() {
+    score = 0;
+
     // create sky
     this.add.tileSprite(
       GAME_WIDTH / 2,
@@ -50,14 +53,14 @@ export default class Main extends Scene {
 
     // create timer for end of game, set to 60 seconds
     this.time.addEvent({
-      delay: 60000,
+      delay: time,
       callback: this.endGame,
       callbackScope: this,
       loop: false
     });
 
     // microphone API, updates the volume variable
-    var micThreshold = 205;
+    var micThreshold = 155;
 
     navigator.mediaDevices
       .getUserMedia({
@@ -110,7 +113,7 @@ export default class Main extends Scene {
     // detect when the volume is above a threshold the balloon bigger or smaller
     if (balloonSize <= maxBalloonSize) {
       if (volume > threshold) {
-        balloonSize += 0.01;
+        balloonSize += 0.015;
       } else {
         if (balloonSize > 1) {
           balloonSize -= 0.005;
@@ -144,6 +147,6 @@ export default class Main extends Scene {
 
   // quit the game
   endGame() {
-    this.scene.start("end");
+    this.scene.start("end", { score: score });
   }
 }

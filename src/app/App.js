@@ -11,7 +11,7 @@ import {
 
 import NotAuthRoute from "routing/NotAuthRoute";
 import ParentAuthRoute from "routing/ParentAuthRoute";
-import ChildAuthRoute from "routing/ChildAuthRoute";
+// import ChildAuthRoute from "routing/ChildAuthRoute";
 
 import Navigation from "../navigation/Navigation";
 import Home from "../home/Home";

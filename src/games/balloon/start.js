@@ -66,5 +66,14 @@ export default class Start extends Scene {
     text.on("pointerout", () => {
       text.setScale(1);
     });
+
+    navigator.mediaDevices.getUserMedia({
+      audio: {
+        echoCancellation: false,
+        noiseSuppression: false,
+        autoGainControl: false
+      },
+      video: false
+    });
   }
 }
