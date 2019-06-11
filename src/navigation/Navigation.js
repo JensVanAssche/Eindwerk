@@ -34,7 +34,7 @@ function Navigation({ parentLoggedIn, childLoggedIn, user }) {
           )}
           {childLoggedIn && (
             <div className="nav-auth">
-              <Link to="/dashboard-child">{user.firstName}</Link>
+              <Link to="/games">{user.firstName}</Link>
             </div>
           )}
         </div>

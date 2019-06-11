@@ -1,29 +1,44 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Plane from "../games/plane/Game";
-import Balloon from "../games/balloon/Game";
 
 import "./gameContainer.scss";
 
-function GameContainer({ match }) {
-  return (
-    <div className="game-container">
-      <Link to="/games" className="back">
-        Terug naar spelletjes
-      </Link>
-      <div
-        style={{
-          display: "flex",
-          alignContent: "center",
-          justifyContent: "center",
-          flexDirection: "row"
-        }}
-      >
-        {match.params.game === "plane" && <Plane />}
-        {match.params.game === "balloon" && <Balloon />}
+class GameContainer extends React.Component {
+  state = {
+    game: null
+  };
+
+  async componentDidMount() {
+    const { match } = this.props;
+    const { default: game } = await import(
+      `../games/${match.params.game}/Game`
+    );
+    this.setState({ game });
+  }
+
+  render() {
+    const { game } = this.state;
+
+    if (!game) return <div>Loading game...</div>;
+
+    return (
+      <div className="game-container">
+        <Link to="/games" className="back">
+          Terug naar spelletjes
+        </Link>
+        <div
+          style={{
+            display: "flex",
+            alignContent: "center",
+            justifyContent: "center",
+            flexDirection: "row"
+          }}
+        >
+          {React.createElement(game)}
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 }
 
 export default GameContainer;

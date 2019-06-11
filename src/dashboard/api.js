@@ -6,4 +6,8 @@ api.getAll = parentId => Network.get(`children/${parentId}`);
 
 api.deleteChild = id => Network.delete(`children/${id}`).then(() => ({ id }));
 
+api.getChildConfig = childId => Network.get(`config/${childId}`);
+
+api.updateChildConfig = data => Network.put(`config`, { data });
+
 export default api;

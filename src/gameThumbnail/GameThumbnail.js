@@ -5,7 +5,7 @@ import "./gameThumbnail.scss";
 
 function GameThumbnail(props) {
   return (
-    <Link to={`/${props.url}/${props.gameId}`}>
+    <Link to={`${props.url}/${props.gameId}`}>
       <img src={`../assets/${props.image}`} alt="" />
       <div>
         <span>{props.gameTitle}</span>

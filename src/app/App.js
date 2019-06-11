@@ -21,8 +21,7 @@ import About from "../about/About";
 import LoginParent from "../auth/LoginParent";
 import LoginChild from "../auth/LoginChild";
 import Signup from "../auth/Signup";
-import DashboardParent from "../dashboard/DashboardParent";
-import DashboardChild from "../dashboard/DashboardChild";
+import Dashboard from "../dashboard/Dashboard";
 import AddChild from "../addChild/AddChild";
 
 import "./app.scss";
@@ -66,20 +65,13 @@ class App extends React.Component {
           <ParentAuthRoute
             exact
             path={"/dashboard-parent"}
-            component={DashboardParent}
+            component={Dashboard}
             parentLoggedIn={parentLoggedIn}
             childLoggedIn={childLoggedIn}
           />
           <ParentAuthRoute
             path={"/dashboard-parent/addchild"}
             component={AddChild}
-            parentLoggedIn={parentLoggedIn}
-            childLoggedIn={childLoggedIn}
-          />
-          <ChildAuthRoute
-            exact
-            path={"/dashboard-child"}
-            component={DashboardChild}
             parentLoggedIn={parentLoggedIn}
             childLoggedIn={childLoggedIn}
           />
