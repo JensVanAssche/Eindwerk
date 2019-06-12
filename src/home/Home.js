@@ -44,7 +44,7 @@ function Home({ parentLoggedIn, childLoggedIn, user, logout }) {
           <div className="home-content">
             <div />
             <div>
-              <Link to="/dashboard-parent">Ga naar dashboard</Link>
+              <Link to="/dashboard">Ga naar dashboard</Link>
               <span className="big-red-button" onClick={logout}>
                 Uitloggen
               </span>

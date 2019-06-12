@@ -1,16 +1,17 @@
 import { Scene } from "phaser";
 import { GAME_HEIGHT, GAME_WIDTH } from "./config";
 
-var plane;
-var background;
-var star;
-
+var gift;
+var price;
+var explosion;
 var threshold = 50;
 var score;
 var scoreText;
 var volumeText;
 var volume;
-var time = 1000;
+var giftRespawnDelay = 4000;
+var enableVoice = true;
+var winScore = 10;
 
 export default class Main extends Scene {
   constructor() {
@@ -18,9 +19,10 @@ export default class Main extends Scene {
   }
 
   preload() {
-    this.load.image("sky", "../../assets/sky_loop.png");
-    this.load.image("plane", "../../assets/plane.png");
-    this.load.image("star", "../../assets/star.png");
+    this.load.image("forest", "../../assets/forest.png");
+    this.load.image("gift", "../../assets/gift.png");
+    this.load.image("balloon2", "../../assets/balloon2.png");
+    this.load.image("explosion", "../../assets/explosion.png");
     this.load.bitmapFont(
       "custom",
       "../../assets/font.png",
@@ -32,37 +34,19 @@ export default class Main extends Scene {
     score = 0;
 
     // create sky
-    background = this.add.tileSprite(
+    this.add.tileSprite(
       GAME_WIDTH / 2,
       GAME_HEIGHT / 2,
       GAME_WIDTH,
       GAME_HEIGHT,
-      "sky"
+      "forest"
     );
 
-    // create plane
-    plane = this.physics.add
-      .image(200, GAME_HEIGHT / 2, "plane")
-      .setScale(0.1)
-      .setOrigin(0.5, 0)
-      .setSize(1000, 450)
-      .setOffset(200, 250);
-    plane.setCollideWorldBounds(true);
-
-    // spawn the first star
-    this.spawnStar();
+    this.spawnGift();
 
     // create the score counter & volume debug
     volumeText = this.add.text(0, 0, "0");
     scoreText = this.add.bitmapText(GAME_WIDTH - 120, 20, "custom", score, 80);
-
-    // create timer for end of game, set to 60 seconds
-    this.time.addEvent({
-      delay: time,
-      callback: this.endGame,
-      callbackScope: this,
-      loop: false
-    });
 
     // microphone API, updates the volume variable
     var micThreshold = 155;
@@ -115,41 +99,68 @@ export default class Main extends Scene {
     // update the debug volume counter
     volumeText.text = Math.round(volume);
 
-    // move background & star
-    background.tilePositionX += 2;
-    star.x -= 3;
-
-    // detect plane & star collision
-    this.physics.collide(plane, star, this.hitSprite, null, this);
-
-    // detect when the volume is above a threshold to make the plane ascend or descend
-    if (volume > threshold) {
-      plane.body.y -= 4;
-    } else {
-      plane.body.y += 2;
+    if (enableVoice && volume > threshold) {
+      this.tweens.add({
+        targets: gift,
+        scaleX: 0,
+        scaleY: 0,
+        duration: 1000
+      });
+      this.spawnPrice();
     }
 
-    // if a star reaches the end of the screen, destroy it and spawn a new one
-    if (star.x <= -70) {
-      star.destroy();
-      this.spawnStar();
+    if (explosion) {
+      explosion.angle += 3;
     }
   }
 
-  // handling a collision between plane and star
-  hitSprite(plane, star) {
-    star.destroy();
+  spawnGift() {
+    if (score === winScore) this.endGame();
+    if (price) price.destroy();
+    if (explosion) explosion.destroy();
+    enableVoice = true;
+    gift = this.physics.add
+      .image(GAME_WIDTH / 2, GAME_HEIGHT / 2, "gift")
+      .setScale(0.5)
+      .setOrigin(0.5, 0.5);
+  }
+
+  spawnPrice() {
+    enableVoice = false;
     score++;
     scoreText.text = score;
-    this.spawnStar();
-  }
 
-  // handling star spawning
-  spawnStar() {
-    star = this.physics.add
-      .image(GAME_WIDTH, Math.random() * GAME_HEIGHT, "star")
-      .setScale(0.08)
-      .setOrigin(0, 0.5);
+    explosion = this.physics.add
+      .image(GAME_WIDTH / 2, GAME_HEIGHT / 2, "explosion")
+      .setScale(0)
+      .setOrigin(0.5, 0.5);
+
+    price = this.physics.add
+      .image(GAME_WIDTH / 2, GAME_HEIGHT / 2, "balloon2")
+      .setScale(0)
+      .setOrigin(0.5, 0.5);
+
+    this.tweens.add({
+      targets: explosion,
+      scaleX: 1.5,
+      scaleY: 1.5,
+      yoyo: true,
+      duration: 600
+    });
+
+    this.tweens.add({
+      targets: price,
+      scaleX: 0.5,
+      scaleY: 0.5,
+      duration: 1000
+    });
+
+    this.time.addEvent({
+      delay: giftRespawnDelay,
+      callback: this.spawnGift,
+      callbackScope: this,
+      loop: false
+    });
   }
 
   // quit the game

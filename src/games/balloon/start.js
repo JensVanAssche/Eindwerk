@@ -2,6 +2,7 @@ import { Scene } from "phaser";
 import { GAME_HEIGHT, GAME_WIDTH } from "./config";
 
 var text;
+var balloon1;
 
 export default class Start extends Scene {
   constructor() {
@@ -9,7 +10,10 @@ export default class Start extends Scene {
   }
 
   preload() {
-    this.load.image("sky", "../../assets/sky_loop.png");
+    this.load.image("forest", "../../assets/forest.png");
+    this.load.image("balloon1", "../../assets/balloon1.png");
+    this.load.image("balloon3", "../../assets/balloon3.png");
+    this.load.image("balloon6", "../../assets/balloon6.png");
     this.load.bitmapFont(
       "playFont",
       "../../assets/font.png",
@@ -24,8 +28,35 @@ export default class Start extends Scene {
       GAME_HEIGHT / 2,
       GAME_WIDTH,
       GAME_HEIGHT,
-      "sky"
+      "forest"
     );
+
+    balloon1 = this.add
+      .image(GAME_WIDTH - 200, 300, "balloon1")
+      .setScale(0.15)
+      .setOrigin(0.5, 0.5);
+
+    this.tweens.add({
+      targets: balloon1,
+      y: 100,
+      ease: "Sine.easeInOut",
+      duration: 3000,
+      delay: 0,
+      repeat: -1,
+      repeatDelay: 200,
+      yoyo: true,
+      hold: 200
+    });
+
+    this.add
+      .image(200, GAME_HEIGHT, "balloon3")
+      .setScale(0.2)
+      .setOrigin(0.5, 1);
+
+    this.add
+      .image(GAME_WIDTH - 300, GAME_HEIGHT, "balloon6")
+      .setScale(0.15)
+      .setOrigin(0.5, 1);
 
     // create title text
     this.add

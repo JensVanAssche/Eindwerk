@@ -17,7 +17,6 @@ import Navigation from "../navigation/Navigation";
 import Home from "../home/Home";
 import GameOverview from "../gameOverview/GameOverview";
 import GameContainer from "../gameContainer/GameContainer";
-import About from "../about/About";
 import LoginParent from "../auth/LoginParent";
 import LoginChild from "../auth/LoginChild";
 import Signup from "../auth/Signup";
@@ -43,7 +42,6 @@ class App extends React.Component {
           <Route exact path="/" component={Home} />
           <Route exact path="/games" component={GameOverview} />
           <Route path="/games/:game" component={GameContainer} />
-          <Route path="/about" component={About} />
           <NotAuthRoute
             path={"/login-parent"}
             component={LoginParent}
@@ -64,13 +62,13 @@ class App extends React.Component {
           />
           <ParentAuthRoute
             exact
-            path={"/dashboard-parent"}
+            path={"/dashboard"}
             component={Dashboard}
             parentLoggedIn={parentLoggedIn}
             childLoggedIn={childLoggedIn}
           />
           <ParentAuthRoute
-            path={"/dashboard-parent/addchild"}
+            path={"/dashboard/addchild"}
             component={AddChild}
             parentLoggedIn={parentLoggedIn}
             childLoggedIn={childLoggedIn}

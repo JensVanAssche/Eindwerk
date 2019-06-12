@@ -31,12 +31,12 @@
     }
 
     .logo {
-      font-size: 6em;
       margin: 0;
-      transform: scale(1.5) rotate(-15deg) translate(-10px, -10px);
-      text-shadow: 0px 4px 0 $red, 4px 4px 0 $red, 4px 0px 0 $red,
-        4px -4px 0 $red, 0px -4px 0 $red, -4px -4px 0 $red, -4px 0px 0 $red,
-        -4px 4px 0 $red;
+      img {
+        width: 250px;
+        height: auto;
+      }
+      transform: scale(1.4) rotate(-15deg) translate(-10px, -10px);
 
       &:hover {
         transform: scale(1.6) rotate(-20deg) translate(-10px, -10px);
@@ -60,11 +60,11 @@
   }
 
   .nav-skew-dark {
-    width: 100%;
-    height: 50px;
+    width: 99%;
+    height: 55px;
     background-color: $darkred;
     position: absolute;
-    transform: skewY(-5deg) translateY(60px);
+    transform: skewY(-5deg) translateY(54px);
     box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.2);
   }
 }

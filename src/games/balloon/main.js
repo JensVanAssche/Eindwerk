@@ -4,8 +4,9 @@ import { GAME_HEIGHT, GAME_WIDTH } from "./config";
 var balloon;
 var threshold = 50;
 var score;
-var balloonSize = 1;
-var maxBalloonSize = 2.5;
+var minballoonSize = 2;
+var balloonSize = minballoonSize;
+var maxBalloonSize = 4;
 var scoreText;
 var volumeText;
 var volume;
@@ -17,7 +18,7 @@ export default class Main extends Scene {
   }
 
   preload() {
-    this.load.image("sky", "../../assets/sky.png");
+    this.load.image("forest", "../../assets/forest.png");
     this.load.image("balloon1", "../../assets/balloon1.png");
     this.load.image("balloon2", "../../assets/balloon2.png");
     this.load.image("balloon3", "../../assets/balloon3.png");
@@ -41,7 +42,7 @@ export default class Main extends Scene {
       GAME_HEIGHT / 2,
       GAME_WIDTH,
       GAME_HEIGHT,
-      "sky"
+      "forest"
     );
 
     // create balloon
@@ -115,7 +116,7 @@ export default class Main extends Scene {
       if (volume > threshold) {
         balloonSize += 0.015;
       } else {
-        if (balloonSize > 1) {
+        if (balloonSize > minballoonSize) {
           balloonSize -= 0.005;
         }
       }
@@ -137,7 +138,7 @@ export default class Main extends Scene {
 
   // handling balloon spawning
   spawnBalloon() {
-    balloonSize = 1;
+    balloonSize = minballoonSize;
     var rnd = Math.round(Math.random() * 6) + 1;
     balloon = this.physics.add
       .image(GAME_WIDTH / 2, GAME_HEIGHT, "balloon" + rnd)

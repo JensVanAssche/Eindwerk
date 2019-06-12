@@ -32,21 +32,10 @@ export default class End extends Scene {
       "sky"
     );
 
-    // create the play button
-    text = this.add
-      .bitmapText(
-        GAME_WIDTH / 2,
-        GAME_HEIGHT / 2 + 150,
-        "playFont",
-        "opnieuw",
-        128
-      )
-      .setOrigin(0.5, 0.5);
-
     this.add
       .bitmapText(
         GAME_WIDTH / 2,
-        GAME_HEIGHT / 2 - 100,
+        GAME_HEIGHT / 2 - 150,
         "playFont",
         "spel gedaan!",
         64
@@ -56,10 +45,21 @@ export default class End extends Scene {
     this.add
       .bitmapText(
         GAME_WIDTH / 2,
-        GAME_HEIGHT / 2,
+        GAME_HEIGHT / 2 - 50,
         "playFont",
         "je score: " + score,
         64
+      )
+      .setOrigin(0.5, 0.5);
+
+    // create the play button
+    text = this.add
+      .bitmapText(
+        GAME_WIDTH / 2,
+        GAME_HEIGHT / 2 + 150,
+        "playFont",
+        "opnieuw",
+        128
       )
       .setOrigin(0.5, 0.5);
 

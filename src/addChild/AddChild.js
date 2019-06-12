@@ -52,7 +52,7 @@ class AddChild extends React.Component {
 
     if (isValid) {
       signupChild(firstName, lastName, user.id, password).then(() => {
-        this.props.history.push(`/dashboard-parent`);
+        this.props.history.push(`/dashboard`);
       });
     } else {
       this.setState({ error: "Velden zijn niet juist ingevuld" });
@@ -95,7 +95,7 @@ class AddChild extends React.Component {
             onChange={this.handlePasswordConfirmChange}
           />
           <button type="submit">Voeg toe</button>
-          <Link to="/dashboard-parent" className="red-button">
+          <Link to="/dashboard" className="red-button">
             Ga terug
           </Link>
         </form>

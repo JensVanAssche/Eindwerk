@@ -38,7 +38,7 @@ class Dashboard extends React.Component {
     return (
       <div className="dashboard">
         <h1>Dashboard</h1>
-        <Link to="/dashboard-parent/addchild" className="red-button">
+        <Link to="/dashboard/addchild" className="red-button">
           Voeg kind toe
         </Link>
         <span onClick={logout} className="red-button">

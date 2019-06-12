@@ -7,6 +7,8 @@ import {
   selectUser
 } from "auth/selectors";
 
+import logo from "assets/logo.png";
+
 import "./navigation.scss";
 
 function Navigation({ parentLoggedIn, childLoggedIn, user }) {
@@ -14,11 +16,11 @@ function Navigation({ parentLoggedIn, childLoggedIn, user }) {
     <div className="nav">
       <div className="nav-content">
         <Link to="/" className="logo">
-          dixido
+          <img src={logo} alt="" />
         </Link>
         <div className="grow" />
         <div>
-          <Link to="/about">Over Ons</Link>
+          <Link to="/games">SPELLETJES</Link>
           {!parentLoggedIn && !childLoggedIn ? (
             <div className="nav-auth">
               <Link to="/login-parent">Log In</Link>
@@ -29,7 +31,7 @@ function Navigation({ parentLoggedIn, childLoggedIn, user }) {
           )}
           {parentLoggedIn && (
             <div className="nav-auth">
-              <Link to="/dashboard-parent">{user.firstName}</Link>
+              <Link to="/dashboard">{user.firstName}</Link>
             </div>
           )}
           {childLoggedIn && (
