@@ -7,18 +7,25 @@ import { selectChildLoggedIn, selectUser } from "auth/selectors";
 import "./gameOverview.scss";
 
 class GameOverview extends React.Component {
+  _isMounted = false;
+
   state = {
-    games: []
+    games: null
   };
 
   async componentDidMount() {
+    this._isMounted = true;
     let games;
     if (this.props.childLoggedIn) {
       games = await api.findByChildId(this.props.user.id);
     } else {
       games = await api.getAll();
     }
-    this.setState({ games });
+    if (this._isMounted) this.setState({ games });
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   render() {
@@ -29,7 +36,7 @@ class GameOverview extends React.Component {
 
     return (
       <div className="gameoverview">
-        <h1>Kies een spel</h1>
+        <h1>spelletjes</h1>
         <div className="gameoverview-content">
           {games.map(game => {
             return (

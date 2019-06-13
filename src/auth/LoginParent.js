@@ -42,7 +42,7 @@ class LoginParent extends React.Component {
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
-          <h1>Log In als ouder/leerkracht</h1>
+          <h1>Log In als begeleider</h1>
           {error && <p className="error-message">{error}</p>}
           <input
             type="text"

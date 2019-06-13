@@ -9,7 +9,7 @@ var score;
 var scoreText;
 var volumeText;
 var volume;
-var giftRespawnDelay = 4000;
+var giftRespawnDelay = 5000;
 var enableVoice = true;
 var parameter;
 
@@ -38,6 +38,13 @@ export default class Main extends Scene {
     this.load.image("price1", "../../assets/price1.png");
     this.load.image("price2", "../../assets/price2.png");
     this.load.image("price3", "../../assets/price3.png");
+    this.load.image("price4", "../../assets/price4.png");
+    this.load.image("price5", "../../assets/price5.png");
+    this.load.image("price6", "../../assets/price6.png");
+    this.load.image("price7", "../../assets/price7.png");
+    this.load.image("price8", "../../assets/price8.png");
+    this.load.image("price9", "../../assets/price9.png");
+    this.load.image("price10", "../../assets/price10.png");
     this.load.image("explosion", "../../assets/explosion.png");
     this.load.bitmapFont(
       "custom",
@@ -152,7 +159,7 @@ export default class Main extends Scene {
       .setScale(0)
       .setOrigin(0.5, 0.5);
 
-    var rnd = Math.round(Math.random() * 2) + 1;
+    var rnd = Math.round(Math.random() * 9) + 1;
 
     price = this.physics.add
       .image(GAME_WIDTH / 2, GAME_HEIGHT / 2, "price" + rnd)

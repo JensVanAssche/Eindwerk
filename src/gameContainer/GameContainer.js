@@ -6,16 +6,23 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import "./gameContainer.scss";
 
 class GameContainer extends React.Component {
+  _isMounted = false;
+
   state = {
     game: null
   };
 
   async componentDidMount() {
+    this._isMounted = true;
     const { match } = this.props;
     const { default: game } = await import(
       `../games/${match.params.game}/Game`
     );
-    this.setState({ game });
+    if (this._isMounted) this.setState({ game });
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   render() {

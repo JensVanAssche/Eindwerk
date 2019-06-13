@@ -8,9 +8,9 @@ var star;
 var threshold = 50;
 var score;
 var scoreText;
+var starCount;
 var volumeText;
 var volume;
-var time = 1000;
 var parameter;
 
 export default class Main extends Scene {
@@ -39,6 +39,7 @@ export default class Main extends Scene {
 
   create() {
     score = 0;
+    starCount = 0;
 
     // create sky
     background = this.add.tileSprite(
@@ -53,7 +54,7 @@ export default class Main extends Scene {
     plane = this.physics.add
       .image(200, GAME_HEIGHT / 2, "plane")
       .setScale(0.1)
-      .setOrigin(0.5, 0)
+      .setOrigin(0.5, 0.5)
       .setSize(1000, 450)
       .setOffset(200, 250);
     plane.setCollideWorldBounds(true);
@@ -126,13 +127,14 @@ export default class Main extends Scene {
     // detect when the volume is above a threshold to make the plane ascend or descend
     if (volume > threshold) {
       plane.body.y -= 4;
+      plane.angle = -10;
     } else {
       plane.body.y += 2;
+      plane.angle = 10;
     }
 
     // if a star reaches the end of the screen, destroy it and spawn a new one
     if (star.x <= -70) {
-      star.destroy();
       this.spawnStar();
     }
   }
@@ -142,12 +144,14 @@ export default class Main extends Scene {
     star.destroy();
     score++;
     scoreText.text = score;
-    if (score === parameter) this.endGame();
     this.spawnStar();
   }
 
   // handling star spawning
   spawnStar() {
+    if (star) star.destroy();
+    starCount++;
+    if (starCount === parameter + 1) this.endGame();
     star = this.physics.add
       .image(GAME_WIDTH, Math.random() * GAME_HEIGHT, "star")
       .setScale(0.08)
@@ -156,6 +160,6 @@ export default class Main extends Scene {
 
   // quit the game
   endGame() {
-    this.scene.start("end", { score: score });
+    this.scene.start("end", { score: score, starCount: parameter });
   }
 }

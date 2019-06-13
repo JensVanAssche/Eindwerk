@@ -73,7 +73,7 @@ class Signup extends React.Component {
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
-          <h1>Registreer</h1>
+          <h1>Registreer begeleider</h1>
           {error && <p className="error-message">{error}</p>}
           <input
             type="text"

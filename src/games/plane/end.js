@@ -3,6 +3,7 @@ import { GAME_HEIGHT, GAME_WIDTH } from "./config";
 
 var text;
 var score;
+var starCount;
 
 export default class End extends Scene {
   constructor() {
@@ -11,6 +12,7 @@ export default class End extends Scene {
 
   init(data) {
     score = data.score;
+    starCount = data.starCount;
   }
 
   preload() {
@@ -47,7 +49,7 @@ export default class End extends Scene {
         GAME_WIDTH / 2,
         GAME_HEIGHT / 2 - 50,
         "playFont",
-        "je score: " + score,
+        "je score: " + score + "/" + starCount,
         64
       )
       .setOrigin(0.5, 0.5);
