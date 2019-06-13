@@ -14,7 +14,7 @@ function NotAuthRoute({
         parentLoggedIn || childLoggedIn ? (
           <Redirect
             to={{
-              pathname: "/"
+              pathname: "/dashboard"
             }}
           />
         ) : (

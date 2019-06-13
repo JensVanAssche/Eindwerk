@@ -72,9 +72,9 @@ class Signup extends React.Component {
     const { error } = this.state;
     return (
       <div>
-        <h1>Registreer</h1>
-        {error && <p className="error-message">{error}</p>}
         <form onSubmit={this.handleSubmit}>
+          <h1>Registreer</h1>
+          {error && <p className="error-message">{error}</p>}
           <input
             type="text"
             name="firstname"

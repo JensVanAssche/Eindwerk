@@ -63,9 +63,9 @@ class AddChild extends React.Component {
     const { error } = this.state;
     return (
       <div>
-        <h1>Voeg kind toe</h1>
-        {error && <p className="error-message">{error}</p>}
         <form onSubmit={this.handleSubmit}>
+          <h1>Voeg kind toe</h1>
+          {error && <p className="error-message">{error}</p>}
           <input
             type="text"
             name="firstname"

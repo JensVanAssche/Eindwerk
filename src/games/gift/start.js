@@ -9,7 +9,7 @@ export default class Start extends Scene {
   }
 
   preload() {
-    this.load.image("forest", "../../assets/forest.png");
+    this.load.image("burst", "../../assets/burst.png");
     this.load.bitmapFont(
       "playFont",
       "../../assets/font.png",
@@ -24,7 +24,7 @@ export default class Start extends Scene {
       GAME_HEIGHT / 2,
       GAME_WIDTH,
       GAME_HEIGHT,
-      "forest"
+      "burst"
     );
 
     // create title text

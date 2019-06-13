@@ -1,6 +1,10 @@
 @import "vars.scss";
 
 form {
+  width: 50%;
+  display: block;
+  margin: 0 auto;
+
   input {
     background-color: $yellow;
     border: 3px solid $red;
@@ -9,7 +13,7 @@ form {
     font-size: 2em;
     font-family: $secondary-font;
     display: block;
-    width: 300px;
+    width: 100%;
     margin-bottom: 15px;
 
     &:focus {

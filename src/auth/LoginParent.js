@@ -31,7 +31,7 @@ class LoginParent extends React.Component {
     const isValid = this.validateForm(email, password);
 
     if (isValid) {
-      loginParent(email, password);
+      loginParent(email, password).then(this.props.history.push("/dashboard"));
     } else {
       this.setState({ error: "Velden zijn niet juist ingevuld" });
     }
@@ -41,9 +41,9 @@ class LoginParent extends React.Component {
     const { error } = this.state;
     return (
       <div>
-        <h1>Log In als ouder/leerkracht</h1>
-        {error && <p className="error-message">{error}</p>}
         <form onSubmit={this.handleSubmit}>
+          <h1>Log In als ouder/leerkracht</h1>
+          {error && <p className="error-message">{error}</p>}
           <input
             type="text"
             name="email"

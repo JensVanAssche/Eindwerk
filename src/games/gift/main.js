@@ -19,9 +19,17 @@ export default class Main extends Scene {
   }
 
   preload() {
-    this.load.image("forest", "../../assets/forest.png");
-    this.load.image("gift", "../../assets/gift.png");
-    this.load.image("balloon2", "../../assets/balloon2.png");
+    this.load.image("burst", "../../assets/burst.png");
+    this.load.image("gift1", "../../assets/gift1.png");
+    this.load.image("gift2", "../../assets/gift2.png");
+    this.load.image("gift3", "../../assets/gift3.png");
+    this.load.image("gift4", "../../assets/gift4.png");
+    this.load.image("gift5", "../../assets/gift5.png");
+    this.load.image("gift6", "../../assets/gift6.png");
+    this.load.image("gift7", "../../assets/gift7.png");
+    this.load.image("price1", "../../assets/price1.png");
+    this.load.image("price2", "../../assets/price2.png");
+    this.load.image("price3", "../../assets/price3.png");
     this.load.image("explosion", "../../assets/explosion.png");
     this.load.bitmapFont(
       "custom",
@@ -39,7 +47,7 @@ export default class Main extends Scene {
       GAME_HEIGHT / 2,
       GAME_WIDTH,
       GAME_HEIGHT,
-      "forest"
+      "burst"
     );
 
     this.spawnGift();
@@ -119,8 +127,9 @@ export default class Main extends Scene {
     if (price) price.destroy();
     if (explosion) explosion.destroy();
     enableVoice = true;
+    var rnd = Math.round(Math.random() * 6) + 1;
     gift = this.physics.add
-      .image(GAME_WIDTH / 2, GAME_HEIGHT / 2, "gift")
+      .image(GAME_WIDTH / 2, GAME_HEIGHT / 2, "gift" + rnd)
       .setScale(0.5)
       .setOrigin(0.5, 0.5);
   }
@@ -135,8 +144,10 @@ export default class Main extends Scene {
       .setScale(0)
       .setOrigin(0.5, 0.5);
 
+    var rnd = Math.round(Math.random() * 2) + 1;
+
     price = this.physics.add
-      .image(GAME_WIDTH / 2, GAME_HEIGHT / 2, "balloon2")
+      .image(GAME_WIDTH / 2, GAME_HEIGHT / 2, "price" + rnd)
       .setScale(0)
       .setOrigin(0.5, 0.5);
 

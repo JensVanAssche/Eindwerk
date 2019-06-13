@@ -8,7 +8,8 @@ function GameThumbnail(props) {
     <Link to={`${props.url}/${props.gameId}`}>
       <img src={`../assets/${props.image}`} alt="" />
       <div>
-        <span>{props.gameTitle}</span>
+        <span />
+        <p>{props.gameTitle}</p>
       </div>
     </Link>
   );

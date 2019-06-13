@@ -18,8 +18,9 @@
         }
 
         div span {
-          padding: 15px;
+          padding: 25px;
           transition: 0.2s;
+          transform: rotate(3deg) translatey(6px);
         }
       }
 
@@ -33,19 +34,26 @@
         cursor: pointer;
         height: 100%;
         width: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-end;
         position: absolute;
         top: 0;
 
         span {
           transition: 0.2s;
+          padding: 20px;
+          background-color: $red;
+          transform: rotate(0deg);
+          position: absolute;
+          bottom: 0;
+          width: 100%;
+        }
+
+        p {
           font-size: 2em;
+          position: absolute;
+          bottom: 7px;
+          width: 100%;
           text-align: center;
-          padding: 10px;
-          color: $white;
-          background-color: rgba($color: #000000, $alpha: 0.2);
+          color: $yellow;
         }
       }
     }

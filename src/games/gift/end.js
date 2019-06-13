@@ -14,7 +14,7 @@ export default class End extends Scene {
   }
 
   preload() {
-    this.load.image("forest", "../../assets/forest.png");
+    this.load.image("burst", "../../assets/burst.png");
     this.load.bitmapFont(
       "playFont",
       "../../assets/font.png",
@@ -29,7 +29,7 @@ export default class End extends Scene {
       GAME_HEIGHT / 2,
       GAME_WIDTH,
       GAME_HEIGHT,
-      "forest"
+      "burst"
     );
 
     // create the play button

@@ -10,7 +10,7 @@ export default class Countdown extends Scene {
   }
 
   preload() {
-    this.load.image("forest", "../../assets/forest.png");
+    this.load.image("burst", "../../assets/burst.png");
     this.load.bitmapFont(
       "custom",
       "../../assets/font.png",
@@ -25,7 +25,7 @@ export default class Countdown extends Scene {
       GAME_HEIGHT / 2,
       GAME_WIDTH,
       GAME_HEIGHT,
-      "forest"
+      "burst"
     );
 
     count = 3;

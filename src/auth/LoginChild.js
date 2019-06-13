@@ -51,9 +51,9 @@ class LoginParent extends React.Component {
     const { error } = this.state;
     return (
       <div>
-        <h1>Log In als kind</h1>
-        {error && <p className="error-message">{error}</p>}
         <form onSubmit={this.handleSubmit}>
+          <h1>Log In als kind</h1>
+          {error && <p className="error-message">{error}</p>}
           <input
             type="text"
             name="firstName"
