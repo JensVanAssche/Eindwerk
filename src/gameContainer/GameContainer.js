@@ -37,7 +37,7 @@ class GameContainer extends React.Component {
             flexDirection: "row"
           }}
         >
-          {React.createElement(game)}
+          {React.createElement(game, { game: this.props.match.params.game })}
         </div>
       </div>
     );

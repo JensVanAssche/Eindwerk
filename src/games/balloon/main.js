@@ -10,11 +10,19 @@ var maxBalloonSize = 4;
 var scoreText;
 var volumeText;
 var volume;
-var time = 60000;
+var parameter;
 
 export default class Main extends Scene {
   constructor() {
     super("main");
+  }
+
+  init(data) {
+    if (data.parameter === "0") {
+      parameter = 10;
+    } else {
+      parameter = parseInt(data.parameter, 10);
+    }
   }
 
   preload() {
@@ -51,14 +59,6 @@ export default class Main extends Scene {
     // create the score counter & volume debug
     volumeText = this.add.text(0, 0, "0");
     scoreText = this.add.bitmapText(GAME_WIDTH - 120, 20, "custom", score, 80);
-
-    // create timer for end of game, set to 60 seconds
-    this.time.addEvent({
-      delay: time,
-      callback: this.endGame,
-      callbackScope: this,
-      loop: false
-    });
 
     // microphone API, updates the volume variable
     var micThreshold = 155;
@@ -131,6 +131,7 @@ export default class Main extends Scene {
         balloon.destroy();
         score++;
         scoreText.text = score;
+        if (score === parameter) this.endGame();
         this.spawnBalloon();
       }
     }

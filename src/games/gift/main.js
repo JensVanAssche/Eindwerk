@@ -11,11 +11,19 @@ var volumeText;
 var volume;
 var giftRespawnDelay = 4000;
 var enableVoice = true;
-var winScore = 10;
+var parameter;
 
 export default class Main extends Scene {
   constructor() {
     super("main");
+  }
+
+  init(data) {
+    if (data.parameter === "0") {
+      parameter = 10;
+    } else {
+      parameter = parseInt(data.parameter, 10);
+    }
   }
 
   preload() {
@@ -123,7 +131,7 @@ export default class Main extends Scene {
   }
 
   spawnGift() {
-    if (score === winScore) this.endGame();
+    if (score === parameter) this.endGame();
     if (price) price.destroy();
     if (explosion) explosion.destroy();
     enableVoice = true;

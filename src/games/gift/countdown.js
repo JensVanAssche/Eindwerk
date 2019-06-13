@@ -3,10 +3,15 @@ import { GAME_HEIGHT, GAME_WIDTH } from "./config";
 
 var count;
 var countdown;
+var parameter;
 
 export default class Countdown extends Scene {
   constructor() {
     super("countdown");
+  }
+
+  init(data) {
+    parameter = data.parameter;
   }
 
   preload() {
@@ -47,7 +52,7 @@ export default class Countdown extends Scene {
   // update the countdown
   updateCountdown() {
     if (count === 0) {
-      this.scene.start("main");
+      this.scene.start("main", { parameter });
     } else if (count === 1) {
       count--;
       countdown.text = "go!";

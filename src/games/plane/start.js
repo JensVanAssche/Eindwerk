@@ -3,10 +3,15 @@ import { GAME_HEIGHT, GAME_WIDTH } from "./config";
 
 var text;
 var plane;
+var parameter;
 
 export default class Start extends Scene {
   constructor() {
     super("start");
+  }
+
+  init(data) {
+    parameter = data.parameter.parameterValue;
   }
 
   preload() {
@@ -72,7 +77,7 @@ export default class Start extends Scene {
 
     // on button click, start countdown scene
     text.on("pointerup", () => {
-      this.scene.start("countdown");
+      this.scene.start("countdown", { parameter });
     });
 
     // on button hover, scale it larger
