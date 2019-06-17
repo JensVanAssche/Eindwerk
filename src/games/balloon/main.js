@@ -2,7 +2,7 @@ import { Scene } from "phaser";
 import { GAME_HEIGHT, GAME_WIDTH } from "./config";
 
 var balloon;
-var threshold = 50;
+var threshold = 80;
 var score;
 var minballoonSize = 2;
 var balloonSize = minballoonSize;

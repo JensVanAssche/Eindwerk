@@ -5,7 +5,7 @@ var plane;
 var background;
 var star;
 
-var threshold = 50;
+var threshold = 80;
 var score;
 var scoreText;
 var starCount;

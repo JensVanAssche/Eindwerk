@@ -67,7 +67,7 @@ export default class Start extends Scene {
         GAME_WIDTH / 2,
         GAME_HEIGHT / 2 + 50,
         "playFont",
-        "start",
+        "speel",
         128
       )
       .setOrigin(0.5, 0.5);
