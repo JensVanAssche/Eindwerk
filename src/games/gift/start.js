@@ -2,7 +2,7 @@ import { Scene } from "phaser";
 import { GAME_HEIGHT, GAME_WIDTH } from "./config";
 
 var text;
-var parameter;
+var values;
 
 export default class Start extends Scene {
   constructor() {
@@ -10,7 +10,7 @@ export default class Start extends Scene {
   }
 
   init(data) {
-    parameter = data.parameter;
+    values = data.values;
   }
 
   preload() {
@@ -59,7 +59,7 @@ export default class Start extends Scene {
 
     // on button click, start countdown scene
     text.on("pointerup", () => {
-      this.scene.start("countdown", { parameter });
+      this.scene.start("countdown", { values });
     });
 
     // on button hover, scale it larger

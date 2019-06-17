@@ -49,6 +49,7 @@ class GameOverview extends React.Component {
               />
             );
           })}
+          {games.length === 0 && <p>Nog geen spelletjes hier</p>}
         </div>
       </div>
     );

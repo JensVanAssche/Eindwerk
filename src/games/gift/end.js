@@ -1,5 +1,6 @@
 import { Scene } from "phaser";
 import { GAME_HEIGHT, GAME_WIDTH } from "./config";
+import api from "games/api";
 
 var text;
 var score;
@@ -11,6 +12,9 @@ export default class End extends Scene {
 
   init(data) {
     score = data.score;
+    if (data.values.childId !== "0") {
+      api.createStat(data.values.childId, data.values.game, score, data.time);
+    }
   }
 
   preload() {

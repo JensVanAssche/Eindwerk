@@ -10,7 +10,8 @@ var maxBalloonSize = 4;
 var scoreText;
 var volumeText;
 var volume;
-var parameter;
+var values;
+var startTime;
 
 export default class Main extends Scene {
   constructor() {
@@ -18,11 +19,7 @@ export default class Main extends Scene {
   }
 
   init(data) {
-    if (data.parameter === "0") {
-      parameter = 10;
-    } else {
-      parameter = parseInt(data.parameter, 10);
-    }
+    values = data.values;
   }
 
   preload() {
@@ -43,6 +40,7 @@ export default class Main extends Scene {
 
   create() {
     score = 0;
+    startTime = new Date();
 
     // create sky
     this.add.tileSprite(
@@ -131,7 +129,7 @@ export default class Main extends Scene {
         balloon.destroy();
         score++;
         scoreText.text = score;
-        if (score === parameter) this.endGame();
+        if (score === parseInt(values.parameter, 10)) this.endGame();
         this.spawnBalloon();
       }
     }
@@ -149,6 +147,12 @@ export default class Main extends Scene {
 
   // quit the game
   endGame() {
-    this.scene.start("end", { score: score });
+    const endTime = new Date();
+    const elapsed = Math.abs((endTime.getTime() - startTime.getTime()) / 1000);
+    this.scene.start("end", {
+      score: score,
+      time: elapsed,
+      values
+    });
   }
 }

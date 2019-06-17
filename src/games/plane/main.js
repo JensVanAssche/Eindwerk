@@ -11,7 +11,8 @@ var scoreText;
 var starCount;
 var volumeText;
 var volume;
-var parameter;
+var values;
+var startTime;
 
 export default class Main extends Scene {
   constructor() {
@@ -19,11 +20,7 @@ export default class Main extends Scene {
   }
 
   init(data) {
-    if (data.parameter === "0") {
-      parameter = 10;
-    } else {
-      parameter = parseInt(data.parameter, 10);
-    }
+    values = data.values;
   }
 
   preload() {
@@ -40,6 +37,7 @@ export default class Main extends Scene {
   create() {
     score = 0;
     starCount = 0;
+    startTime = new Date();
 
     // create sky
     background = this.add.tileSprite(
@@ -151,7 +149,7 @@ export default class Main extends Scene {
   spawnStar() {
     if (star) star.destroy();
     starCount++;
-    if (starCount === parameter + 1) this.endGame();
+    if (starCount === parseInt(values.parameter, 10) + 1) this.endGame();
     star = this.physics.add
       .image(GAME_WIDTH, Math.random() * GAME_HEIGHT, "star")
       .setScale(0.08)
@@ -160,6 +158,12 @@ export default class Main extends Scene {
 
   // quit the game
   endGame() {
-    this.scene.start("end", { score: score, starCount: parameter });
+    const endTime = new Date();
+    const elapsed = Math.abs((endTime.getTime() - startTime.getTime()) / 1000);
+    this.scene.start("end", {
+      score: score,
+      time: elapsed,
+      values
+    });
   }
 }

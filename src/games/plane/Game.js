@@ -11,7 +11,7 @@ import { selectChildLoggedIn, selectUser } from "auth/selectors";
 
 import { GAME_HEIGHT, GAME_WIDTH } from "./config";
 
-var parameter;
+var values;
 
 class IGame extends React.Component {
   state = {
@@ -30,7 +30,22 @@ class IGame extends React.Component {
   }
 
   loadConfig(newParameter) {
-    parameter = newParameter;
+    const { childLoggedIn, user, game } = this.props;
+
+    if (childLoggedIn) {
+      values = {
+        parameter: newParameter,
+        childId: user.id,
+        game
+      };
+    } else {
+      values = {
+        parameter: newParameter,
+        childId: "0",
+        game
+      };
+    }
+
     this.setState({ startGame: true });
 
     const config = {
@@ -95,6 +110,6 @@ export default connect(
 
 class Boot extends Phaser.Scene {
   create() {
-    this.scene.start("start", { parameter });
+    this.scene.start("start", { values });
   }
 }

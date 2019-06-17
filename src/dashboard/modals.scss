@@ -45,11 +45,15 @@
     }
 
     > div {
-      width: 40%;
+      width: 50%;
 
       &:last-child {
         display: flex;
         align-items: center;
+
+        span {
+          min-width: 90px;
+        }
 
         input {
           border: 2px $darkblue solid;
@@ -69,6 +73,20 @@
 
     label {
       margin-left: 5px;
+    }
+  }
+
+  .stats-entry {
+    font-size: 1.5em;
+
+    &.top {
+      span {
+        color: $red;
+      }
+    }
+    span {
+      display: inline-block;
+      width: 200px;
     }
   }
 }
