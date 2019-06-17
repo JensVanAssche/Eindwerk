@@ -11,7 +11,7 @@ export default class Start extends Scene {
   }
 
   init(data) {
-    parameter = data.parameter.parameterValue;
+    parameter = data.parameter;
   }
 
   preload() {

@@ -102,3 +102,40 @@ p {
     background-color: $darkgray;
   }
 }
+
+#phaser-game {
+  p {
+    margin-bottom: 10px;
+  }
+
+  input {
+    background-color: $yellow;
+    border: 3px solid $red;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 2em;
+    font-family: $secondary-font;
+    display: inline-block;
+    width: calc(100% - 105px);
+    margin-right: 10px;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  button {
+    background-color: $red;
+    color: $yellow;
+    border: none;
+    border-radius: 10px;
+    padding: 13px 25px;
+    cursor: pointer;
+    font-family: $secondary-font;
+    font-size: 2em;
+
+    &:hover {
+      background-color: $darkred;
+    }
+  }
+}

@@ -14,13 +14,24 @@ import { GAME_HEIGHT, GAME_WIDTH } from "./config";
 var parameter;
 
 class IGame extends React.Component {
-  async componentDidMount() {
+  state = {
+    parameter: "",
+    startGame: false
+  };
+
+  componentDidMount() {
     const { childLoggedIn, user, game } = this.props;
     if (childLoggedIn) {
-      parameter = await api.getParameter(user.id, game);
-    } else {
-      parameter = { parameterValue: "0" };
+      api.getParameter(user.id, game).then(res => {
+        this.setState({ parameter: res.parameterValue });
+        this.loadConfig(this.state.parameter);
+      });
     }
+  }
+
+  loadConfig(newParameter) {
+    parameter = newParameter;
+    this.setState({ startGame: true });
 
     const config = {
       type: Phaser.AUTO,
@@ -41,12 +52,34 @@ class IGame extends React.Component {
     new Phaser.Game(config);
   }
 
-  shouldComponentUpdate() {
-    return false;
-  }
+  handleParameterChange = event => {
+    this.setState({ parameter: event.target.value });
+  };
+
+  // shouldComponentUpdate() {
+  //   return false;
+  // }
 
   render() {
-    return <div id="phaser-game" />;
+    return (
+      <div id="phaser-game">
+        {!this.state.startGame && (
+          <div>
+            <h1>Vliegtuigje vliegen</h1>
+            <p>Aantal sterren:</p>
+            <input
+              type="text"
+              name="parameter"
+              value={this.state.parameter}
+              onChange={this.handleParameterChange}
+            />
+            <button onClick={() => this.loadConfig(this.state.parameter)}>
+              Speel
+            </button>
+          </div>
+        )}
+      </div>
+    );
   }
 }
 

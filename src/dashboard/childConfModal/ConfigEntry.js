@@ -28,7 +28,12 @@ class ConfigEntry extends React.Component {
     const forId = `checkbox-${config.id}`;
 
     return (
-      <div key={config.id} className="config-entry">
+      <div
+        key={config.id}
+        className={
+          "config-entry " + (this.state.enabled ? "enabled" : "disabled")
+        }
+      >
         <div>
           <input
             type="checkbox"

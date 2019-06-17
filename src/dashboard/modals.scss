@@ -35,6 +35,15 @@
     display: flex;
     align-items: center;
 
+    &.disabled {
+      color: $gray;
+
+      > div:last-child input {
+        border: 2px $gray solid;
+        color: $gray;
+      }
+    }
+
     > div {
       width: 40%;
 
