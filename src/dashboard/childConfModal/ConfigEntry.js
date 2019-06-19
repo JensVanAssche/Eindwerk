@@ -35,12 +35,15 @@ class ConfigEntry extends React.Component {
         }
       >
         <div>
-          <input
-            type="checkbox"
-            id={forId}
-            checked={this.state.enabled}
-            onChange={this.handleEnabledChange}
-          />
+          <label className="switch">
+            <input
+              type="checkbox"
+              id={forId}
+              checked={this.state.enabled}
+              onChange={this.handleEnabledChange}
+            />
+            <span className="slider round" />
+          </label>
           <label htmlFor={forId}>{config.gameDisplayName}</label>
         </div>
         <div>

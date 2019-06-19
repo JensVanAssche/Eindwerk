@@ -10,7 +10,7 @@ class ChildStatsModal extends React.Component {
   state = {
     modalOpen: false,
     child: null,
-    stats: null
+    stats: []
   };
 
   openModal = child => {
@@ -51,6 +51,11 @@ class ChildStatsModal extends React.Component {
             stats.map(stat => {
               return <StatsEntry key={stat.id} stats={stat} />;
             })}
+          {stats.length === 0 && (
+            <div className="stats-entry">
+              <span>Nog geen statistieken</span>
+            </div>
+          )}
         </Modal.Content>
         <Modal.Actions>
           <div className="grow" />

@@ -53,7 +53,7 @@ class ChildConfModal extends React.Component {
         open={this.state.modalOpen}
         onOpen={this.openModal}
         onClose={this.closeModal}
-        size="tiny"
+        size="small"
       >
         <Modal.Header>
           {child.firstName} {child.lastName}: Configureer
